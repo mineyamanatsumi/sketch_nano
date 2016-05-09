@@ -1,7 +1,18 @@
 body {
-    background: #bdf;
+    background: #FEFAEC;
+    color: #625772;
+    padding: 20px;
 }
 
+h1 {
+  color:#F38181;
+}
+/*
+header {background:#A9EEE6;
+  line-height: px;
+  width: 600px;
+ }
+*/
 canvas {
-    background: #fff;
+    background: #FFFFFF;
 }
