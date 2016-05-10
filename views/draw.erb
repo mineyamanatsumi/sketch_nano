@@ -1,7 +1,14 @@
 <div class="drawbox">
-  <h1>お絵かき画面</h1>
-  <p><canvas id="draw_canvas" width="640px" height="480px"></canvas></p>
-  <p><input type="text" name="title" placeholder="絵のタイトル"></input></p>
-  <button class="save">保存する</button>
+  <h1>Let's Draw</h1>
+
+  <div class="container">
+    <p class="col-md-8"><canvas id="draw_canvas" width="640" height="480"></canvas></p>
+    <div class="col-md-4">
+      <p><input type="text" name="title" placeholder="title"></input></p>
+      <p><input id="lineWidth" type="range" name="range" ></input></p>
+      <p><input id="lineColor" type="color" name="color" ></input></p>
+      <button class="btn btn-primary save">save</button>
+    </div>
+  </div>
 </div>
 <script src="/js/draw.js"></script>

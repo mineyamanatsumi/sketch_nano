@@ -1,4 +1,4 @@
-<h1>ダッシュボード</h1>
+<h1>dashboard</h1>
 <p><a href="/draw">お絵かきする</a></p>
 
 <% posts.each do |post| %>
@@ -10,7 +10,7 @@
     <img src="/uploads/<%= post["src"] %>" alt="<%= post["title"] %>">
     </p>
     <p>
-    💖 
+    💖
     <button class="like" data-id="<%= post["id"] %>">
       <%= post["likes"] %>
     </button>

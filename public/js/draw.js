@@ -2,6 +2,7 @@
 
 $(function () {
   var $canvas = $('canvas');
+  var $slider = $('#lineWidth');
   var canvas = $canvas[0];
   var width = canvas.width;
   var height = canvas.height;
@@ -27,6 +28,8 @@ $(function () {
   $canvas.mousemove(function (e) {
     var x = e.originalEvent.layerX; // 行き先
     var y = e.originalEvent.layerY; // 行き先
+    context2d.lineWidth = $slider.val();
+    context2d.strokeStyle = $("#lineColor").val();
     if (isDrawing) {
       context2d.lineTo(x, y);
       context2d.stroke();
