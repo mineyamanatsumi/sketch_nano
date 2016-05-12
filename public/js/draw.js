@@ -50,10 +50,11 @@ $(function () {
   $('button.save').click(function (e) {
     var dataUrl = canvas.toDataURL();
     var title = $('.drawbox input[name=title]').val();
-
+    var erokunai = 0;
     $.post('/draw', {
       src: dataUrl,
-      title: title
+      title: title,
+      r18: erokunai
     }, function (result) {
       alert('保存しました！');
       // 画面を真っ白にする
@@ -61,4 +62,22 @@ $(function () {
       context2d.fillRect(0, 0, width, height);
     });
   });
+
+// R18保存
+$('button.saver18').click(function (e) {
+  var dataUrl = canvas.toDataURL();
+  var title = $('.drawbox input[name=title]').val();
+  var eroi = 1;
+
+  $.post('/draw', {
+    src: dataUrl,
+    title: title,
+    r18: eroi
+  }, function (result) {
+    alert('保存しました！');
+    // 画面を真っ白にする
+    context2d.fillStyle = '#FFF';
+    context2d.fillRect(0, 0, width, height);
+  });
+});
 });

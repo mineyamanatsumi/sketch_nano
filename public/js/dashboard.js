@@ -8,3 +8,10 @@ $(function () {
     $clicked.text(parseInt(likes, 10) + 1);
   });
 });
+
+$('checkbox.18radiobox').click(function (e) {
+
+    alert('保存しました！');
+    
+  });
+});
