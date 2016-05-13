@@ -18,11 +18,20 @@ canvas {
     background: #FFFFFF;
 }
 
+.post-image img {
+    border-radius: 50%;
+}
+
 .like {
    border-color: transparent;
    background-color: transparent;
+   vertical-align: bottom;
 }
 
 .like::before {
-  content: '💖';
+  content: '💛';
+}
+
+.post {
+  display: inline-block;
 }
