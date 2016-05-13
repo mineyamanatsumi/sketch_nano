@@ -17,9 +17,9 @@ end
 
 get '/dashboard' do
   if params[:r18] == "true"
-    posts = db.execute("SELECT * FROM pictures ORDER BY id DESC")
+    posts = db.execute("SELECT * FROM pictures WHERE adult = 1 ORDER BY id DESC")
   else
-    posts = db.execute("SELECT * FROM eropictures ORDER BY id DESC")
+    posts = db.execute("SELECT * FROM pictures ORDER BY id DESC")
   end
   erb :dashboard, {:locals => {:posts => posts}}
 end
@@ -51,5 +51,17 @@ post '/draw' do
   redirect '/dashboard'
 end
 
-get '/api/like' do
+post '/api/like' do
+  # javascriptから送られてきた値を受け取る
+  dataid = params['dataid']
+
+  # 1を足した結果を、データベースのそのIDのところに保存する
+  db.execute_batch("UPDATE pictures SET likes = likes+1 WHERE id = #{dataid}")
+
+  # resultをjsonで渡す
+  posts = db.execute("SELECT * FROM pictures where id = #{dataid}")
+  p posts
+  result = { like: posts[0]['likes'] }
+
+  json result
 end

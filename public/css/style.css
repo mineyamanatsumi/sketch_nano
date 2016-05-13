@@ -17,3 +17,12 @@ header {background:#A9EEE6;
 canvas {
     background: #FFFFFF;
 }
+
+.like {
+   border-color: transparent;
+   background-color: transparent;
+}
+
+.like::before {
+  content: '💖';
+}
