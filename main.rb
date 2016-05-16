@@ -43,7 +43,9 @@ post '/draw' do
 
   #DBに登録する
   time = Time.now.strftime('%Y-%m-%d %H:%M:%S')
-  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES ('#{params['title']}', '#{name}', '#{time}', '#{r18bunrui}')"
+#  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES ('#{params['title']}', '#{name}', '#{time}', '#{r18bunrui}')"
+  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES (?, ?, ?, ?')"
+ db.execute_batch(sql,[params['title'], name, time, params['r18bunrui']])
 
   db.execute_batch(sql)
 
@@ -59,7 +61,9 @@ post '/api/like' do
   db.execute_batch("UPDATE pictures SET likes = likes+1 WHERE id = #{dataid}")
 
   # resultをjsonで渡す
-  posts = db.execute("SELECT * FROM pictures where id = #{dataid}")
+  posts = db.execute("SELECT * FROM pictures where id = ?")
+  db.execute_batch(sql,[dataid])
+
   p posts
   result = { like: posts[0]['likes'] }
 
