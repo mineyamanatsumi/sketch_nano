@@ -6,7 +6,7 @@ $(function () {
     var dataId   = $clicked.data('id');
     var likes    = $clicked.text();
 
-    $.post("/api/like", { 'dataid': dataId }, function(result) {
+    $.post("/api/like", { 'dataid': dataId, 'likes':likes }, function(result) {
       $clicked.text(result.like);
     });
 

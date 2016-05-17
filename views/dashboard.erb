@@ -1,5 +1,10 @@
 <h1>dashboard</h1>
 <p><a href="/draw">お絵かきする</a>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    ファイル:<br />
+    <input type="file" name="file" size="30" value=""/><br/>
+    <input type="submit" value="send"/>
+</form>
 <a href="?r18=true">R18表示</a></p>
 
 
@@ -8,12 +13,13 @@
     <h2>
       <%= Rack::Utils.escape_html post["title"] %>
     </h2>
-    <p class="post-image">
+    <figure class="post-image">
     <img src="/uploads/<%= post["src"] %>" alt="<%= Rack::Utils.escape_html post["title"] %>">
-    <button class="like" data-id="<%= post["id"] %>">
-      <%= post["likes"] %>
-    </button>
-    </p>
-  </div>
+    <figcaption>  <button class="like" data-id="<%= post["id"] %>">
+        <%= post["likes"] %>
+      </button></figcaption>
+
+  </figure>
+</div>
 <% end %>
 <script src="/js/dashboard.js"></script>

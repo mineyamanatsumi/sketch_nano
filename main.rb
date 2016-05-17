@@ -44,28 +44,48 @@ post '/draw' do
   #DBに登録する
   time = Time.now.strftime('%Y-%m-%d %H:%M:%S')
 #  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES ('#{params['title']}', '#{name}', '#{time}', '#{r18bunrui}')"
-  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES (?, ?, ?, ?')"
+  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES (?, ?, ?, ?)"
  db.execute_batch(sql,[params['title'], name, time, params['r18bunrui']])
-
-  db.execute_batch(sql)
 
   # 終わったらダッシュボードに戻る
   redirect '/dashboard'
 end
 
-post '/api/like' do
-  # javascriptから送られてきた値を受け取る
-  dataid = params['dataid']
+# アップロード処理
+post '/upload' do
+	if params[:file]
+    name = SecureRandom.hex + '.png'
+		save_path = "./public/uploads/#{name}"
 
-  # 1を足した結果を、データベースのそのIDのところに保存する
-  db.execute_batch("UPDATE pictures SET likes = likes+1 WHERE id = #{dataid}")
+		File.open(save_path, 'wb') do |f|
+			p params[:file][:tempfile]
+			f.write params[:file][:tempfile].read
+			@mes = "#{save_path}"
+		end
+#DBに登録する
+    time = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+  #  sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES ('#{params['title']}', '#{name}', '#{time}', '#{r18bunrui}')"
+    sql = "INSERT INTO pictures (title, src, posted_at, adult) VALUES (?, ?, ?, ?)"
+    db.execute_batch(sql,params['title'], name, time, params['r18bunrui'])
 
-  # resultをjsonで渡す
-  posts = db.execute("SELECT * FROM pictures where id = ?")
-  db.execute_batch(sql,[dataid])
+    #db.execute_batch(sql)
 
-  p posts
-  result = { like: posts[0]['likes'] }
-
-  json result
+	else
+		@mes = "アップロード失敗"
+	end
 end
+
+post '/api/like' do
+   # javascriptから送られてきた値を受け取る
+   dataid = params['dataid']
+   likes = params['likes']
+   p params
+   # 1を足した結果を、データベースのそのIDのところに保存する
+   db.execute_batch("UPDATE pictures SET likes = #{likes}+1 WHERE id = #{dataid}")
+
+   # resultをjsonで渡す
+   posts = db.execute("SELECT * FROM pictures where id = ?", dataid)
+   result = { like: posts[0]['likes'] }
+
+   json result
+  end
